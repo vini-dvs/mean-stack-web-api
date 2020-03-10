@@ -30,4 +30,19 @@ function listQuestions(){
     return deferred.promise;
 }
 
+function create(question) {
+    var deferred = Q.defer();
+
+    function createQuestion() {
+        db.questions.insert(
+            question,
+            function (err, doc) {
+                if (err) deferred.reject(err.name + ': ' + err.message);
+                deferred.resolve();
+            });
+    }
+    return deferred.promise;
+}
+
+
 module.exports = service;

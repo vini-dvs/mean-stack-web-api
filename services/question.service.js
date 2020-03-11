@@ -43,11 +43,11 @@ function create(question) {
     return deferred.promise;
 }
 
-function remove(question) {
+function remove(id) {
     var deferred = Q.defer();
     db.questions.remove(
-        question,
-        function (err, doc) {
+        {_id: mongo.helper.toObjectID(id)},
+        function (err) {
             if (err) deferred.reject(err.name + ': ' + err.message);
             deferred.resolve();
         });

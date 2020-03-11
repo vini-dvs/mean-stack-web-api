@@ -32,7 +32,7 @@ function newQuestion(req, res) {
 }
 
 function deleteQuestion(req, res) {
-    questionService.remove(req.body)
+    questionService.remove(req.body._id)
         .then(function () {
             res.sendStatus(200);
         })

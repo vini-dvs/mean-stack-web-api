@@ -12,6 +12,7 @@ var service = {};
 
 service.listQuestions = listQuestions;
 service.create = create;
+service.remove = remove;
 
 function listQuestions() {
     var deferred = Q.defer();
@@ -34,6 +35,17 @@ function listQuestions() {
 function create(question) {
     var deferred = Q.defer();
     db.questions.insert(
+        question,
+        function (err, doc) {
+            if (err) deferred.reject(err.name + ': ' + err.message);
+            deferred.resolve();
+        });
+    return deferred.promise;
+}
+
+function remove(question) {
+    var deferred = Q.defer();
+    db.questions.remove(
         question,
         function (err, doc) {
             if (err) deferred.reject(err.name + ': ' + err.message);

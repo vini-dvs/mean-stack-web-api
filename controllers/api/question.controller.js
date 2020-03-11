@@ -5,7 +5,8 @@ var questionService = require('services/question.service');
 
 // routes
 router.get('/', getQuestions);
-router.post('/newQuestion', newQuestion);
+router.post('/', newQuestion);
+router.delete('/', deleteQuestion);
 
 function getQuestions(req, res){
     questionService.listQuestions()
@@ -22,6 +23,16 @@ function getQuestions(req, res){
 }
 function newQuestion(req, res) {
     questionService.create(req.body)
+        .then(function () {
+            res.sendStatus(200);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
+function deleteQuestion(req, res) {
+    questionService.remove(req.body)
         .then(function () {
             res.sendStatus(200);
         })

@@ -11,11 +11,12 @@ var service = {};
 
 
 service.listQuestions = listQuestions;
+service.create = create;
 
-function listQuestions(){
+function listQuestions() {
     var deferred = Q.defer();
 
-    db.questions.find(function (err, questions) {
+    db.questions.find().toArray(function (err, questions) {
         if (err) deferred.reject(err.name + ': ' + err.message);
 
         if (questions) {
@@ -32,15 +33,12 @@ function listQuestions(){
 
 function create(question) {
     var deferred = Q.defer();
-
-    function createQuestion() {
-        db.questions.insert(
-            question,
-            function (err, doc) {
-                if (err) deferred.reject(err.name + ': ' + err.message);
-                deferred.resolve();
-            });
-    }
+    db.questions.insert(
+        question,
+        function (err, doc) {
+            if (err) deferred.reject(err.name + ': ' + err.message);
+            deferred.resolve();
+        });
     return deferred.promise;
 }
 

@@ -5,13 +5,13 @@ var questionService = require('services/question.service');
 
 // routes
 router.get('/', getQuestions);
+router.post('/newQuestion', newQuestion);
 
-function getQuestions(res){
+function getQuestions(req, res){
     questionService.listQuestions()
         .then(function (questions) {
             if (questions) {
-                //res.send(questions);
-                res.send(200);
+                res.send(questions);
             } else {
                 res.sendStatus(404);
             }
